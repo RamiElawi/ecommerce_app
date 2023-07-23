@@ -1,0 +1,30 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{docTitle}
+        link(rel="stylesheet", href="/css/add-product.css")
+        link(rel="stylesheet", href="/css/shop.css")
+    body 
+    include ../includes/navigation
+    ul 
+        each p in Products
+            li 
+                div #{p.productId.title} 
+                p #{p.productId.price}$
+                h3 (#{p.quantity}) 
+    div 
+        h2 toatlSum = $#{totalPrice} 
+    div 
+        button#order-btn ORDER 
+        script(src='http://js.stripe.com/v3/') 
+        script 
+            -var stripe=Stripe('pk_test_51LkrmJHr5O4xNa16geUuPGeC6ykHpWIWB86KQetddKooJ8bo6ZbLV9LmPGjkWsVN0tejNWDkz3XslCmbbgPW7xeT00ONuAm6mc')
+            -var orderBTN=document.getElemtnById('order-btn')
+            -orderBTN.addEventListner('click',function(){
+                stripe.redirectToCheckout({
+                    sessionId:sessionId
+                })
+            })

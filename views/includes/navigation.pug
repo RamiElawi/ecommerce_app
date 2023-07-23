@@ -1,0 +1,28 @@
+header.main-header 
+    nav.nav-bar 
+        ul.main-list 
+            li.Links 
+                a.link(href="/",class=(path==='/'?'active':'')) Shop 
+            li.Links 
+                a.link(href="/products",class=(path==='/products'?'active':'')) products
+            if (isAuthentcated) 
+                li.Links 
+                    a.link(href="/cart",class=(path==='/cart'?'active':'')) Cart 
+                li.Links 
+                    a.link(href="/orders",class=(path==='/orders'?'active':'')) Orders 
+                li.Links 
+                    a.link(href="/admin/add-product",class=(path==='/admin/add-product'?'active':'')) Add Product
+                li.Links 
+                    a.link(href="/admin/products",class=(path==='/admin/products'?'active':'')) Admin Product
+        ul.main-list
+            if (!isAuthentcated)
+                li.Links 
+                    a.link(href='/login',class=(path==='/login'?'active':'')) Login
+                li.Links    
+                    a.link(href='/signup',class=(path==='/signup'?'active':'')) Signup
+            else
+                li.Links 
+                    form(action='/logout',method='post')
+                        input(type='hidden',name='_csrf' ,value= csrfToken)
+                        button.btn(type='submit') logout
+                

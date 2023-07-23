@@ -1,0 +1,30 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{docTitle}
+        link(rel="stylesheet", href="/css/shop.css")
+        link(rel="stylesheet", href="/css/add-product.css")
+    body 
+        include ../includes/navigation.pug 
+        main 
+            if prods.length > 0
+                .grid
+                    each product in prods 
+                        article.card.product-item 
+                            header.card-header 
+                                h1.product-title #{product.title}
+                            .card-image 
+                                img(src='/'+product.imgUrl,width='200',heigh='200', alt=product.title)
+                            .card-content 
+                                h2.card-price $#{product.price}
+                                p.card-description #{product.description} 
+                            .card-action 
+                                a.btn(href="/products/" + product._id) Details 
+                                if (isAuthentcated)
+                                    include ../includes/add-to-cart
+                include ../includes/pagination
+            else 
+                h1 No Products

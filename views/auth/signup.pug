@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{docTitle}
+        link(rel="stylesheet", href="/css/shop.css")
+        link(rel="stylesheet", href="/css/add-product.css")
+    body 
+        include ../includes/navigation.pug 
+        main
+            if(erorrSignup)
+                div.erorrMessage.invaled #{erorrSignup}
+            form( action='/signup' ,method="POST" novalidate)
+                div.label E-mail:
+                if validationError ==='email'
+                    input(type="email" ,name="email",value=oldInput.email,class='invaledinput')
+                else 
+                    input(type="email" ,name="email",value=oldInput.email)
+                div.label Password:
+                if validationError ==='password'
+                    input(type="password" ,name="password",value=oldInput.password,class='invaledinput')
+                else 
+                    input(type="password" ,name="password",value=oldInput.password)
+                div.label Confirm Password:
+                if validationError ==='confirmPassword'
+                    input(type="password" ,name="confirmPassword",value=oldInput.confirmPassword,class="invaledinput")
+                else
+                    input(type="password" ,name="confirmPassword",value=oldInput.confirmPassword)
+                input(type='hidden',name='_csrf' ,value= csrfToken)
+                button.btn(type="submit") Signup

@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{docTitle}
+        link(rel="stylesheet", href="/css/shop.css")
+        link(rel="stylesheet", href="/css/add-product.css")
+    body 
+        include ../includes/navigation.pug 
+        main
+            if(erorrMessage)
+                div.erorrMessage.invaled #{erorrMessage}
+            form( action=(edite) ? '/admin/edit-product' : '/admin/add-product' ,method="POST",enctype='multipart/form-data')
+                div.label Title:
+                if validationError === 'title'
+                    input(type="text",class='invaledinput' ,name="title", value= (edite  || hasError)? product.title : "")
+                else
+                    input(type="text" ,name="title", value= (edite  || hasError)? product.title : "")
+                div.label Price:
+                if validationError === 'price'
+                    input(type="number",class='invaledinput' ,name="price" step='0.01',value=(edite  || hasError)?product.price:'')
+                else
+                    input(type="number" ,name="price" step='0.01',value=(edite  || hasError)?product.price:'')
+                div.label Image:
+                //- if validationError === 'UrlImage'
+                    input(type="text",class='invaledinput' ,name="UrlImage",value=(edite || hasError)?product.imgUrl:'')
+                //- else
+                    input(type="text" ,name="UrlImage",value=(edite || hasError)?product.imgUrl:'')
+                input(type="file",name="Image",class='file')
+                div.label description:
+                if validationError === 'description'
+                    textarea(name="description",class='invaledinput', rows="10" ) #{(edite  || hasError)?product.description:''} 
+                else
+                    textarea(name="description", rows="10" ) #{(edite  || hasError)?product.description:''} 
+                if(edite)
+                    input(type="hidden", value = product._id ,name="productId")
+                input(type='hidden',name='_csrf' ,value= csrfToken)
+                button.btn(type="submit") #{edite ? "Update Product" : "Add Product" }  
